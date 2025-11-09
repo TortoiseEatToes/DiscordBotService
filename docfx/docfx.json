@@ -10,11 +10,13 @@
         }
       ],
       "namespaceLayout": "flattened",
-      "memberLayout": "separatePages"
+      "memberLayout": "separatePages",
+	  "enumSortOrder": "declaringOrder",
+	  "dest": "_site"
     }
   ],
   "build": {
-	  "output": "../artifacts/docfx",
+	  "output": "api",
 	  "template": [
       "default",
       "modern",
