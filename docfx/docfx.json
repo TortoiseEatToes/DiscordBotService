@@ -1,0 +1,17 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../",
+          "files": [
+            "src/DiscordBotService.csproj"
+          ]
+        }
+      ],
+      "dest": "../artifacts/docfx",
+      "namespaceLayout": "flattened",
+      "memberLayout": "separatePages"
+    }
+  ]
+}
