@@ -1,5 +1,5 @@
-using TortoiseBot;
-using TortoiseBot.Extensions;
+using DiscordBotService;
+using DiscordBotService.Extensions;
 
 var builder = Host.CreateApplicationBuilder(args);
 

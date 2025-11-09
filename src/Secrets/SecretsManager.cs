@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace SharedUtilities.Secrets;
+namespace DiscordBotService.Secrets;
 
 /// <summary>
 /// Uses user secrets and enviornment variables as our secrets

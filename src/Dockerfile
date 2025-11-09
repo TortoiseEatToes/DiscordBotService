@@ -10,19 +10,19 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["TortoiseBot.csproj", "."]
-RUN dotnet restore "./TortoiseBot.csproj"
+COPY ["DiscordBotService.csproj", "."]
+RUN dotnet restore "./DiscordBotService.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "./TortoiseBot.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./DiscordBotService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./TortoiseBot.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./DiscordBotService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TortoiseBot.dll"]
+ENTRYPOINT ["dotnet", "DiscordBotService.dll"]

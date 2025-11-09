@@ -1,7 +1,7 @@
-﻿using SharedUtilities.Secrets;
-using TortoiseBot.Discord;
+﻿using DiscordBotService.Discord;
+using DiscordBotService.Secrets;
 
-namespace TortoiseBot;
+namespace DiscordBotService;
 
 /// <summary>
 /// Service for running the Discord Bot

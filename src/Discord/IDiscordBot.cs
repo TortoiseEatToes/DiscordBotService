@@ -1,4 +1,4 @@
-﻿namespace TortoiseBot.Discord;
+﻿namespace DiscordBotService.Discord;
 
 /// <summary>
 /// Generic interface for the Discord bot.

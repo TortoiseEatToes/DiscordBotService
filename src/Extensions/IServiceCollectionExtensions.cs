@@ -2,11 +2,12 @@
 using Discord.Interactions;
 using Discord.Rest;
 using Discord.WebSocket;
+using DiscordBotService.Discord;
+using DiscordBotService.Extensions;
+using DiscordBotService.Secrets;
 using NLog.Extensions.Logging;
-using SharedUtilities.Secrets;
-using TortoiseBot.Discord;
 
-namespace TortoiseBot.Extensions;
+namespace DiscordBotService.Extensions;
 
 /// <summary>
 /// Utility functions for required services

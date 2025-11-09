@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-TortoiseBot-a3ab6227-15be-4148-8dd0-ab1855312d0a</UserSecretsId>
+    <UserSecretsId>dotnet-DiscordBotService-a3ab6227-15be-4148-8dd0-ab1855312d0a</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
     <ServerGarbageCollection>true</ServerGarbageCollection>

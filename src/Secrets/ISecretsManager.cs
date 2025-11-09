@@ -1,4 +1,4 @@
-﻿namespace SharedUtilities.Secrets;
+﻿namespace DiscordBotService.Secrets;
 
 /// <summary>
 /// A secrets manager is our generic tool for accessing secrets in both development and production environments.

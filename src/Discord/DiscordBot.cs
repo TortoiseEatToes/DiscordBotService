@@ -3,10 +3,10 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using System.Reflection;
 
-namespace TortoiseBot.Discord;
+namespace DiscordBotService.Discord;
 
 /// <summary>
-/// The discord bot for interacting with the Drafty WebAPI
+/// Manages basic callbacks for interacting with the Discord API
 /// </summary>
 public class DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient discordSocketClient, InteractionService interactionService, IServiceProvider serviceProvider) : IDiscordBot, IAsyncDisposable
 {
@@ -24,7 +24,7 @@ public class DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient discordS
             return;
         }
 
-        logger.LogDebug("DraftyDiscordBot Setting callbacks");
+        logger.LogDebug("DiscordBot Setting callbacks");
         discordSocketClient.Ready += OnClientIsReady;
         discordSocketClient.Log += OnClientLog;
         discordSocketClient.JoinedGuild += OnJoinedGuild;
@@ -32,7 +32,7 @@ public class DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient discordS
 
         AddInteractionServiceCallbacks();
 
-        logger.LogDebug("DraftyDiscordBot logging in");
+        logger.LogDebug("DiscordBot logging in");
         await discordSocketClient.LoginAsync(TokenType.Bot, discordToken);
         await discordSocketClient.StartAsync();
     }
@@ -79,7 +79,7 @@ public class DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient discordS
             await Task.Delay(1000);
         }
 
-        logger.LogDebug("DraftyDiscordBot is ready");
+        logger.LogDebug("DiscordBot is ready");
     }
 
     /// <exclude/>
