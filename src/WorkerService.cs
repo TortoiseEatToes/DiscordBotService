@@ -8,11 +8,11 @@ namespace DiscordBotService;
 /// </summary>
 /// <param name="logger">Logger in the WorkerService category</param>
 /// <param name="discordBot">Reference to our custom discord bot</param>
-/// <param name="serviceProvider">Used to get <see cref="TokenStringName"/> from <see cref="ISecretsManager"/></param>
+/// <param name="secretsManager">Used to get <see cref="TokenStringName"/></param>
 public class WorkerService(
     ILogger<WorkerService> logger,
     IDiscordBot discordBot,
-    IServiceProvider serviceProvider) : BackgroundService
+    ISecretsManager secretsManager) : BackgroundService
 {
     /// <summary>
     /// DiscordToken key
@@ -24,7 +24,6 @@ public class WorkerService(
     {
         logger.LogInformation("Starting up");
         logger.LogDebug("Getting discord token '{0}'", TokenStringName);
-        var secretsManager = serviceProvider.GetRequiredService<ISecretsManager>();
         string discordToken = secretsManager.GetRequiredSecret(TokenStringName);
         try
         {
