@@ -8,7 +8,7 @@ namespace DiscordBotService;
 /// </summary>
 /// <param name="logger">Logger in the WorkerService category</param>
 /// <param name="discordBot">Reference to our custom discord bot</param>
-/// <param name="serviceProvider">The service provider that created this class</param>
+/// <param name="serviceProvider">Used to get <see cref="TokenStringName"/> from <see cref="ISecretsManager"/></param>
 public class WorkerService(
     ILogger<WorkerService> logger,
     IDiscordBot discordBot,
