@@ -15,8 +15,11 @@ namespace DiscordBotService.Extensions;
 public static class IServiceCollectionExtensions
 {
     /// <summary>
-    /// Adds NLog as our standardized ILogger
+    /// Adds NLog as our standardized ILogger.
     /// </summary>
+    /// <remarks>
+    /// Clears existing logging providers
+    /// </remarks>
     public static void AddNLog(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddLogging(loggingBuilder =>
@@ -27,15 +30,18 @@ public static class IServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Adds the default SecretsManager
+    /// Adds the default <see cref="SecretsManager"/>
     /// </summary>
+    /// <remarks>
+    /// This adds environment variables and user secrets as secret sources.
+    /// </remarks>
     public static void AddSecretsManager(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<ISecretsManager, SecretsManager>();
     }
 
     /// <summary>
-    /// Adds the discord bot
+    /// Adds the discord bot to the service provider.
     /// </summary>
     public static void AddDiscordBot(this IServiceCollection serviceCollection)
     {
@@ -45,7 +51,7 @@ public static class IServiceCollectionExtensions
         };
         serviceCollection.AddSingleton(discordSocketConfig);
         var discordSocketClient = new DiscordSocketClient(discordSocketConfig);
-        serviceCollection.AddSingleton<IRestClientProvider>(discordSocketClient);
+        serviceCollection.AddSingleton<IRestClientProvider>(discordSocketClient); //This is needed by the InteractionService
         serviceCollection.AddSingleton(discordSocketClient);
 
         var interactionServiceConfig = new InteractionServiceConfig {
