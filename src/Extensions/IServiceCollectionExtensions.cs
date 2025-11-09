@@ -41,8 +41,11 @@ public static class IServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Adds the discord bot to the service provider.
+    /// Adds the Discord bot to the service provider.
     /// </summary>
+    /// <remarks>
+    /// Additionally adds a bunch of Discord bot dependencies.
+    /// </remarks>
     public static void AddDiscordBot(this IServiceCollection serviceCollection)
     {
         var discordSocketConfig = new DiscordSocketConfig {

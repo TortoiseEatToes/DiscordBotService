@@ -8,6 +8,10 @@ namespace DiscordBotService.Discord;
 /// <summary>
 /// Manages basic callbacks for interacting with the Discord API
 /// </summary>
+/// <param name="logger">Logger in the DiscordBot category</param>
+/// <param name="discordSocketClient">Discord SocketClient for interacting with the bot</param>
+/// <param name="interactionService">Interaction for callbacks for the bot</param>
+/// <param name="serviceProvider">The service provider that created this class</param>
 public class DiscordBot(
     ILogger<DiscordBot> logger,
     DiscordSocketClient discordSocketClient,

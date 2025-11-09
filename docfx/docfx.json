@@ -9,22 +9,23 @@
           ]
         }
       ],
+      "dest": "artifacts/projects",
       "namespaceLayout": "flattened",
-      "memberLayout": "separatePages",
-	  "enumSortOrder": "declaringOrder",
-	  "dest": "_site"
+      "enumSortOrder": "declaringOrder"
     }
   ],
   "build": {
-	  "output": "api",
-	  "template": [
+    "content": [ "**/*.{md,yml}" ],
+    "output": "artifacts/site",
+    "template": [
       "default",
       "modern",
+      "templates/discord"
     ],
     "globalMetadata": {
       "_appName": "DiscordBotService",
       "_appTitle": "DiscordBotService",
-      "_appFooter": "Made with <a href=\"https://dotnet.github.io/docfx\">docfx</a>",
+      "_appFooter": "Source <a href=\"https://github.com/TortoiseEatToes/DiscordBotService\">DiscordBotService</a>",
       "_enableSearch": true
     }
   }
