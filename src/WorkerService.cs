@@ -6,7 +6,10 @@ namespace DiscordBotService;
 /// <summary>
 /// Service for running the Discord Bot
 /// </summary>
-public class WorkerService(ILogger<WorkerService> logger, IDiscordBot discordBot, IServiceProvider serviceProvider) : BackgroundService
+public class WorkerService(
+    ILogger<WorkerService> logger,
+    IDiscordBot discordBot,
+    IServiceProvider serviceProvider) : BackgroundService
 {
     /// <summary>
     /// DiscordToken key

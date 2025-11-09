@@ -8,7 +8,11 @@ namespace DiscordBotService.Discord;
 /// <summary>
 /// Manages basic callbacks for interacting with the Discord API
 /// </summary>
-public class DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient discordSocketClient, InteractionService interactionService, IServiceProvider serviceProvider) : IDiscordBot, IAsyncDisposable
+public class DiscordBot(
+    ILogger<DiscordBot> logger,
+    DiscordSocketClient discordSocketClient,
+    InteractionService interactionService,
+    IServiceProvider serviceProvider) : IDiscordBot, IAsyncDisposable
 {
     /// <summary>
     /// Dispose flag
