@@ -40,9 +40,23 @@ public class DiscordBot(
 
         AddInteractionServiceCallbacks();
 
+        // Add your own GuildInvites callbacks here
+        //discordSocketClient.InviteCreated;
+        //discordSocketClient.IntegrationDeleted;
+
+        // Add your own GuildScheduledEvents callbacks here
+        //discordSocketClient.GuildScheduledEventCreated;
+        //discordSocketClient.GuildScheduledEventUpdated;
+        //discordSocketClient.GuildScheduledEventCancelled;
+        //discordSocketClient.GuildScheduledEventCompleted;
+        //discordSocketClient.GuildScheduledEventStarted;
+        //discordSocketClient.GuildScheduledEventUserAdd;
+        //discordSocketClient.GuildScheduledEventUserRemove;
+
         logger.LogDebug("DiscordBot logging in");
         await discordSocketClient.LoginAsync(TokenType.Bot, discordToken);
         await discordSocketClient.StartAsync();
+        logger.LogDebug("DiscordBot logging in complete");
     }
 
     ///<inheritdoc/>
