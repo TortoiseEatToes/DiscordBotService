@@ -23,6 +23,6 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <DockerfileRunArguments>--mount type=bind,source=C:\DockerMount,target=/app/artifacts</DockerfileRunArguments>
+    <DockerfileRunArguments>--mount type=bind,source=$(MSBuildProjectDirectory)/artifacts,target=/app/artifacts</DockerfileRunArguments>
   </PropertyGroup>
 </Project>
