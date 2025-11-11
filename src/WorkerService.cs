@@ -22,7 +22,7 @@ public class WorkerService(
     /// <inheritdoc/>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        logger.LogInformation("Starting up");
+        logger.LogInformation("Starting up in {0}", Directory.GetCurrentDirectory());
         logger.LogDebug("Getting discord token '{0}'", TokenStringName);
         string discordToken = secretsManager.GetRequiredSecret(TokenStringName);
         try
