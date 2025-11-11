@@ -21,4 +21,8 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="6.0.5" />
     <None Update="NLog.config" CopyToOutputDirectory="Always" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <DockerfileRunArguments>--mount type=bind,source=C:\DockerMount,target=/app/artifacts</DockerfileRunArguments>
+  </PropertyGroup>
 </Project>
