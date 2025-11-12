@@ -4,7 +4,6 @@ using Discord.Rest;
 using Discord.WebSocket;
 using DiscordBotService.Discord;
 using DiscordBotService.Extensions;
-using DiscordBotService.Secrets;
 using NLog.Extensions.Logging;
 
 namespace DiscordBotService.Extensions;
@@ -27,17 +26,6 @@ public static class IServiceCollectionExtensions
             loggingBuilder.ClearProviders();
             loggingBuilder.AddNLog();
         });
-    }
-
-    /// <summary>
-    /// Adds the default <see cref="SecretsManager"/>
-    /// </summary>
-    /// <remarks>
-    /// This adds environment variables and user secrets as secret sources.
-    /// </remarks>
-    public static void AddSecretsManager(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddSingleton<ISecretsManager, SecretsManager>();
     }
 
     /// <summary>

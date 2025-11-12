@@ -13,13 +13,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-    <ProjectReference Include="..\DiscordBotCommands\DiscordBotCommands.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="6.0.5" />
     <PackageReference Include="NLog.Extensions.Logging" Version="6.0.5" />
     <None Update="NLog.config" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiscordBotCommands\DiscordBotCommands.csproj" />
+    <ProjectReference Include="..\SharedUtilities\SharedUtilities.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

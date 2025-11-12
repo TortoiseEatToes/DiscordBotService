@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
 
-namespace DiscordBotService.Secrets;
+namespace SharedUtilities.Secrets;
 
 /// <summary>
 /// Uses user secrets and enviornment variables as our secrets

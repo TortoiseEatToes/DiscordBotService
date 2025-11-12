@@ -1,5 +1,5 @@
 ﻿using DiscordBotService.Discord;
-using DiscordBotService.Secrets;
+using SharedUtilities.Secrets;
 
 namespace DiscordBotService.Service;
 
