@@ -21,7 +21,7 @@ public class DiscordBot(
     /// <summary>
     /// Dispose flag
     /// </summary>
-    private bool _isRunning = false;
+    private bool _isRunning;
 
     ///<inheritdoc/>
     public async Task StartAsync(string discordToken)
@@ -31,6 +31,7 @@ public class DiscordBot(
             logger.LogWarning("Discord bot was already started");
             return;
         }
+        _isRunning = true;
 
         logger.LogDebug("DiscordBot Setting callbacks");
         discordSocketClient.Ready += OnClientIsReadyAsync;
@@ -67,6 +68,14 @@ public class DiscordBot(
             logger.LogWarning("Discord bot was not started or already disposed");
             return;
         }
+        _isRunning = false;
+        
+        logger.LogDebug("Clearing callbacks");
+        discordSocketClient.Ready -= OnClientIsReadyAsync;
+        discordSocketClient.Log -= OnClientLog;
+        discordSocketClient.JoinedGuild -= OnJoinedGuild;
+        discordSocketClient.InteractionCreated -= OnInteractionCreatedAsync;
+        
         logger.LogDebug("Shutting down Discord socket client");
         foreach (SocketGuild guild in discordSocketClient.Guilds)
         {
@@ -102,9 +111,9 @@ public class DiscordBot(
         DiscordModules discordModules = await GetDiscordModulesAsync();
         logger.LogDebug("Setting up global commands");
         var test = await interactionService.AddModulesGloballyAsync(deleteMissing: true, discordModules.Global);
-        foreach (var intance in test)
+        foreach (var instance in test)
         {
-            logger.LogTrace($"Added global module: {intance.Name}");
+            logger.LogTrace($"Added global module: {instance.Name}");
         }
         logger.LogDebug("Finished setting up global commands");
 
@@ -118,7 +127,7 @@ public class DiscordBot(
     }
 
     /// <summary>
-    /// Gets all of the modules from our assembly
+    /// Gets all the modules from our assembly
     /// </summary>
     /// <remarks>
     /// Finds the assembly based on where <see cref="GlobalModuleAttribute"/> exists
@@ -194,7 +203,7 @@ public class DiscordBot(
     }
 
     /// <summary>
-    /// Binds a <see cref="HandleInteractionExecuted{TInteraction}(TInteraction, IInteractionContext, IResult)"/> to all the Discord callbacks
+    /// Binds a <see cref="HandleInteractionExecutedAsync{TInteraction}(TInteraction, IInteractionContext, IResult)"/> to all the Discord callbacks
     /// </summary>
     private void AddInteractionServiceCallbacks()
     {
