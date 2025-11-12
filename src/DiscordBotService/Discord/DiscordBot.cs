@@ -2,8 +2,6 @@
 using Discord.Interactions;
 using Discord.WebSocket;
 using DiscordBotCommands.Attributes;
-using System.Collections.Concurrent;
-using System.Reflection;
 
 namespace DiscordBotService.Discord;
 
@@ -117,15 +115,6 @@ public class DiscordBot(
             await interactionService.AddModulesToGuildAsync(guild.Id, deleteMissing: true, discordModules.Guild);
         }
         logger.LogDebug("Finished setting up all commands");
-    }
-
-    /// <summary>
-    /// Convenience wrapper for tracking the different kinds of modules
-    /// </summary>
-    private struct DiscordModules
-    {
-        public ModuleInfo[] Global;
-        public ModuleInfo[] Guild;
     }
 
     /// <summary>

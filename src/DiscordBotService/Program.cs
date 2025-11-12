@@ -1,5 +1,6 @@
 using DiscordBotService.Extensions;
 using DiscordBotService.Service;
+using SharedUtilities.Extensions;
 
 var builder = Host.CreateApplicationBuilder(args);
 
