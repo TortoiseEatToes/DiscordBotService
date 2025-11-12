@@ -1,6 +1,8 @@
 ﻿using Discord.Interactions;
+using DiscordBotCommands.Attributes;
+using Microsoft.Extensions.Logging;
 
-namespace DiscordBotService.Discord.Commands;
+namespace DiscordBotCommands.Commands;
 
 /// <summary>
 /// Example commands

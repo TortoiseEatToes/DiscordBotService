@@ -1,6 +1,8 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
+using DiscordBotCommands.Attributes;
+using System.Collections.Concurrent;
 using System.Reflection;
 
 namespace DiscordBotService.Discord;
@@ -129,12 +131,16 @@ public class DiscordBot(
     /// <summary>
     /// Gets all of the modules from our assembly
     /// </summary>
+    /// <remarks>
+    /// Finds the assembly based on where <see cref="GlobalModuleAttribute"/> exists
+    /// </remarks>
     private async Task<DiscordModules> GetDiscordModulesAsync()
     {
         List<ModuleInfo> globalModules = [];
         List<ModuleInfo> guildModules = [];
 
-        IEnumerable<ModuleInfo> allModules = await interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
+        var commandAssembly = typeof(GlobalModuleAttribute).Assembly;
+        IEnumerable<ModuleInfo> allModules = await interactionService.AddModulesAsync(commandAssembly, serviceProvider);
         foreach (ModuleInfo module in allModules)
         {
             if (IsModuleGlobal(module))
@@ -146,6 +152,7 @@ public class DiscordBot(
                 guildModules.Add(module);
             }
         }
+
         return new DiscordModules {
             Global = globalModules.ToArray(),
             Guild = guildModules.ToArray()

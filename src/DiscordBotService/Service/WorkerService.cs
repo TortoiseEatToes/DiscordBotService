@@ -1,7 +1,7 @@
 ﻿using DiscordBotService.Discord;
 using DiscordBotService.Secrets;
 
-namespace DiscordBotService;
+namespace DiscordBotService.Service;
 
 /// <summary>
 /// Service for running the Discord Bot
