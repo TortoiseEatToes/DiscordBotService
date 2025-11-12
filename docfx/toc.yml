@@ -1,2 +1,8 @@
-- name: Docs
-  href: artifacts/projects/
+- name: Service
+  href: artifacts/code/service/
+
+- name: Commands
+  href: artifacts/code/commands/
+
+- name: Shared
+  href: artifacts/code/shared/

@@ -1,4 +1,5 @@
 ﻿namespace DiscordBotCommands.Attributes;
+using Discord.Interactions;
 
 /// <summary>
 /// Used to decorate <see cref="InteractionModuleBase"/> classes that should be applied globally to the bot.

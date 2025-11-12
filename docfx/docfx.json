@@ -3,15 +3,35 @@
     {
       "src": [
         {
-          "src": "../",
+          "src": "../src/DiscordBotCommands",
           "files": [
-            "src/DiscordBotService.csproj"
+            "DiscordBotCommands.csproj"
           ]
         }
       ],
-      "dest": "artifacts/projects",
-      "namespaceLayout": "flattened",
-      "enumSortOrder": "declaringOrder"
+      "dest": "artifacts/code/commands"
+    },
+    {
+      "src": [
+        {
+          "src": "../src/DiscordBotService",
+          "files": [
+            "DiscordBotService.csproj"
+          ]
+        }
+      ],
+      "dest": "artifacts/code/service"
+    },
+    {
+      "src": [
+        {
+          "src": "../src/SharedUtilities",
+          "files": [
+            "SharedUtilities.csproj"
+          ]
+        }
+      ],
+      "dest": "artifacts/code/shared"
     }
   ],
   "build": {
