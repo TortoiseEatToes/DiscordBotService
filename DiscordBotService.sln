@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBotService", "src\DiscordBotService\DiscordBotService.csproj", "{5F2474B4-AB06-0220-8471-283C8EE51CE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBotService", "src\DiscordBotService.csproj", "{5FC58ADC-A81B-2F72-EC67-2381D3B7945A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBotCommands", "src\DiscordBotCommands\DiscordBotCommands.csproj", "{C13141C7-8011-BA82-679D-57B7D280E1A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +13,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5FC58ADC-A81B-2F72-EC67-2381D3B7945A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FC58ADC-A81B-2F72-EC67-2381D3B7945A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FC58ADC-A81B-2F72-EC67-2381D3B7945A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FC58ADC-A81B-2F72-EC67-2381D3B7945A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F2474B4-AB06-0220-8471-283C8EE51CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F2474B4-AB06-0220-8471-283C8EE51CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F2474B4-AB06-0220-8471-283C8EE51CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F2474B4-AB06-0220-8471-283C8EE51CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C13141C7-8011-BA82-679D-57B7D280E1A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C13141C7-8011-BA82-679D-57B7D280E1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C13141C7-8011-BA82-679D-57B7D280E1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C13141C7-8011-BA82-679D-57B7D280E1A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5FC58ADC-A81B-2F72-EC67-2381D3B7945A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75826C70-D090-4292-B586-8346C00ED772}
