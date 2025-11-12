@@ -6,6 +6,7 @@ namespace DiscordBotService.Discord.Commands;
 /// Example commands
 /// </summary>
 /// <param name="logger">Logger in the DebugCommands category</param>
+[GlobalModule]
 public class DebugCommands(ILogger<DebugCommands> logger) : InteractionModuleBase
 {
     /// <summary>

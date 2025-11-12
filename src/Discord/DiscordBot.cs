@@ -33,10 +33,10 @@ public class DiscordBot(
         }
 
         logger.LogDebug("DiscordBot Setting callbacks");
-        discordSocketClient.Ready += OnClientIsReady;
+        discordSocketClient.Ready += OnClientIsReadyAsync;
         discordSocketClient.Log += OnClientLog;
         discordSocketClient.JoinedGuild += OnJoinedGuild;
-        discordSocketClient.InteractionCreated += OnInteractionCreated;
+        discordSocketClient.InteractionCreated += OnInteractionCreatedAsync;
 
         AddInteractionServiceCallbacks();
 
@@ -85,28 +85,90 @@ public class DiscordBot(
         await StopAsync();
     }
 
-    /// <exclude/>
     /// <summary>
     /// When we receive the OnClientIsReady event from Discord, create the modules on all of our servers
     /// </summary>
-    private async Task OnClientIsReady()
+    private async Task OnClientIsReadyAsync()
     {
-        ModuleInfo[] allModules = (await interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider)).ToArray();
+        await AddModulesToGuildsAsync();
+        logger.LogDebug("DiscordBot is ready");
+    }
+
+    /// <summary>
+    /// Adds all global and guild based modules
+    /// </summary>
+    private async Task AddModulesToGuildsAsync()
+    {
+        DiscordModules discordModules = await GetDiscordModulesAsync();
+        logger.LogDebug("Setting up global commands");
+        var test = await interactionService.AddModulesGloballyAsync(deleteMissing: true, discordModules.Global);
+        foreach (var intance in test)
+        {
+            logger.LogTrace($"Added global module: {intance.Name}");
+        }
+        logger.LogDebug("Finished setting up global commands");
 
         logger.LogDebug("Setting up guild commands");
         foreach (var guild in discordSocketClient.Guilds)
         {
-            logger.LogDebug($"registering modules to {guild.Name}");
-            await interactionService.AddModulesToGuildAsync(guild.Id, deleteMissing: true, allModules);
-            await Task.Delay(1000);
+            logger.LogTrace($"registering modules to {guild.Name}");
+            await interactionService.AddModulesToGuildAsync(guild.Id, deleteMissing: true, discordModules.Guild);
         }
-
-        logger.LogDebug("DiscordBot is ready");
+        logger.LogDebug("Finished setting up all commands");
     }
 
-    /// <exclude/>
     /// <summary>
-    /// When this bot joins a guild, we add our commands to that guild.
+    /// Convenience wrapper for tracking the different kinds of modules
+    /// </summary>
+    private struct DiscordModules
+    {
+        public ModuleInfo[] Global;
+        public ModuleInfo[] Guild;
+    }
+
+    /// <summary>
+    /// Gets all of the modules from our assembly
+    /// </summary>
+    private async Task<DiscordModules> GetDiscordModulesAsync()
+    {
+        List<ModuleInfo> globalModules = [];
+        List<ModuleInfo> guildModules = [];
+
+        IEnumerable<ModuleInfo> allModules = await interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
+        foreach (ModuleInfo module in allModules)
+        {
+            if (IsModuleGlobal(module))
+            {
+                globalModules.Add(module);
+            }
+            else
+            {
+                guildModules.Add(module);
+            }
+        }
+        return new DiscordModules {
+            Global = globalModules.ToArray(),
+            Guild = guildModules.ToArray()
+        };
+    }
+
+    /// <summary>
+    /// Checks for the <see cref="GlobalModuleAttribute"/> to check if a module is global.
+    /// </summary>
+    private static bool IsModuleGlobal(ModuleInfo moduleInfo)
+    {
+        foreach (var attribute in moduleInfo.Attributes)
+        {
+            if (attribute.GetType() == typeof(GlobalModuleAttribute))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// When this bot joins a new guild, add our commands to that guild.
     /// </summary>
     private Task OnJoinedGuild(SocketGuild socketGuild)
     {
@@ -115,11 +177,10 @@ public class DiscordBot(
         return Task.CompletedTask;
     }
 
-    /// <exclude/>
     /// <summary>
     /// Callback for when an interaction is created
     /// </summary>
-    private async Task OnInteractionCreated(SocketInteraction socketInteraction)
+    private async Task OnInteractionCreatedAsync(SocketInteraction socketInteraction)
     {
         try
         {
@@ -136,25 +197,23 @@ public class DiscordBot(
         }
     }
 
-    /// <exclude/>
     /// <summary>
     /// Binds a <see cref="HandleInteractionExecuted{TInteraction}(TInteraction, IInteractionContext, IResult)"/> to all the Discord callbacks
     /// </summary>
     private void AddInteractionServiceCallbacks()
     {
-        interactionService.SlashCommandExecuted += async (slashCommandInfo, interactionContext, result) => { await HandleInteractionExecuted(slashCommandInfo, interactionContext, result); };
-        interactionService.ContextCommandExecuted += async (contextCommandInfo, interactionContext, result) => { await HandleInteractionExecuted(contextCommandInfo, interactionContext, result); };
-        interactionService.ComponentCommandExecuted += async (componentCommandInfo, interactionContext, result) => { await HandleInteractionExecuted(componentCommandInfo, interactionContext, result); };
-        interactionService.AutocompleteCommandExecuted += async (autoCompleteCommandInfo, interactionContext, result) => { await HandleInteractionExecuted(autoCompleteCommandInfo, interactionContext, result); };
-        interactionService.AutocompleteHandlerExecuted += async (autoCompleteHandler, interactionContext, result) => { await HandleInteractionExecuted(autoCompleteHandler, interactionContext, result); };
-        interactionService.ModalCommandExecuted += async (modalCommandInfo, interactionContext, result) => { await HandleInteractionExecuted(modalCommandInfo, interactionContext, result); };
+        interactionService.SlashCommandExecuted += async (slashCommandInfo, interactionContext, result) => { await HandleInteractionExecutedAsync(slashCommandInfo, interactionContext, result); };
+        interactionService.ContextCommandExecuted += async (contextCommandInfo, interactionContext, result) => { await HandleInteractionExecutedAsync(contextCommandInfo, interactionContext, result); };
+        interactionService.ComponentCommandExecuted += async (componentCommandInfo, interactionContext, result) => { await HandleInteractionExecutedAsync(componentCommandInfo, interactionContext, result); };
+        interactionService.AutocompleteCommandExecuted += async (autoCompleteCommandInfo, interactionContext, result) => { await HandleInteractionExecutedAsync(autoCompleteCommandInfo, interactionContext, result); };
+        interactionService.AutocompleteHandlerExecuted += async (autoCompleteHandler, interactionContext, result) => { await HandleInteractionExecutedAsync(autoCompleteHandler, interactionContext, result); };
+        interactionService.ModalCommandExecuted += async (modalCommandInfo, interactionContext, result) => { await HandleInteractionExecutedAsync(modalCommandInfo, interactionContext, result); };
     }
 
-    /// <exclude/>
     /// <summary>
     /// Generic callback for logging information about issues with Discord interactions
     /// </summary>
-    private async Task HandleInteractionExecuted<TInteraction>(TInteraction interaction, IInteractionContext interactionContext, IResult result)
+    private async Task HandleInteractionExecutedAsync<TInteraction>(TInteraction interaction, IInteractionContext interactionContext, IResult result)
     {
         if (result.IsSuccess)
         {
@@ -162,14 +221,13 @@ public class DiscordBot(
             return;
         }
         string interactionName = interaction is null ? $"Unknown {nameof(InteractionType)}" : $"{interaction}";
-        await HandleInteractionError(interactionName, interactionContext, result);
+        await HandleInteractionErrorAsync(interactionName, interactionContext, result);
     }
 
-    /// <exclude/>
     /// <summary>
     /// When we receive failed interactions, log out the information and try to respond if possible.
     /// </summary>
-    private async Task HandleInteractionError(string interactionName, IInteractionContext interactionContext, IResult result)
+    private async Task HandleInteractionErrorAsync(string interactionName, IInteractionContext interactionContext, IResult result)
     {
         string resultErrorMessage = GetResultErrorString(result);
         string interactionErrorMessage = $"{interactionName}:{resultErrorMessage}";
@@ -192,7 +250,6 @@ public class DiscordBot(
         await interactionContext.Interaction.RespondAsync(userErrorMessage);
     }
 
-    /// <exclude/>
     /// <summary>
     /// Converts an interaction to a convenient string
     /// </summary>
@@ -201,7 +258,6 @@ public class DiscordBot(
         return $"{interactionContext.Guild}:{interactionContext.User}";
     }
 
-    /// <exclude/>
     /// <summary>
     /// Converts a result to a convenient string
     /// </summary>
@@ -218,7 +274,6 @@ public class DiscordBot(
         };
     }
 
-    /// <exclude/>
     /// <summary>
     /// All messages from Discord are sent through our logger as well
     /// </summary>
@@ -230,7 +285,6 @@ public class DiscordBot(
         return Task.CompletedTask;
     }
 
-    /// <exclude/>
     /// <summary>
     /// Discord LogSeverity is slightly different from Microsoft's LogLevel
     /// </summary>
